@@ -6,7 +6,7 @@ from discord.ext import commands
 intents = discord.Intents.default()
 intents.members = True
 
-TOKEN = os.getenv('DISCORD_TOKEN2')
+TOKEN = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
