@@ -47,17 +47,17 @@ async def player_of_the_month(ctx, place, player):
         points = row[0]
         print(player, 'now has', points, 'points')
         if points >= 62:
-            ctx.send(f'{player} now has enough Clan Points to be an Admin')
+            await ctx.send(f'{player} now has enough Clan Points to be an Admin')
         elif points >= 42:
-            ctx.send(f'{player} is now a General')
+            await ctx.send(f'{player} is now a General')
         elif points >= 28:
-            ctx.send(f'{player} is now a Captain')
+            await ctx.send(f'{player} is now a Captain')
         elif points >= 17:
-            ctx.send(f'{player} is now a Lieutenant')
+            await ctx.send(f'{player} is now a Lieutenant')
         elif points >= 8:
-            ctx.send(f'{player} is now a Sergeant')
+            await ctx.send(f'{player} is now a Sergeant')
         elif points >= 3:
-            ctx.send(f'{player} is now a Corporal')
+            await ctx.send(f'{player} is now a Corporal')
 
 
 @bot.command(name='cap', help='Type Discord or player name after command')
@@ -74,17 +74,17 @@ async def on_cap(ctx, player):
         points = row[0]
         print(player, 'now has', points, 'points')
         if points >= 62:
-            ctx.send(f'{player} now has enough Clan Points to be an Admin')
+            await ctx.send(f'{player} now has enough Clan Points to be an Admin')
         elif points >= 42:
-            ctx.send(f'{player} is now a General')
+            await ctx.send(f'{player} is now a General')
         elif points >= 28:
-            ctx.send(f'{player} is now a Captain')
+            await ctx.send(f'{player} is now a Captain')
         elif points >= 17:
-            ctx.send(f'{player} is now a Lieutenant')
+            await ctx.send(f'{player} is now a Lieutenant')
         elif points >= 8:
-            ctx.send(f'{player} is now a Sergeant')
+            await ctx.send(f'{player} is now a Sergeant')
         elif points >= 3:
-            ctx.send(f'{player} is now a Corporal')
+            await ctx.send(f'{player} is now a Corporal')
 
 
 @bot.event
