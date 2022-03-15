@@ -1,13 +1,11 @@
 import os
 import discord
 import sqlite3
-from dotenv import load_dotenv
 from discord.ext import commands
 
 intents = discord.Intents.default()
 intents.members = True
 
-load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='!', intents=intents)
@@ -43,6 +41,24 @@ async def player_of_the_month(ctx, place, player):
     else:
         print('error')
 
+    sql = 'SELECT points FROM ClanPoints WHERE player=?'
+    cur.execute(sql, [player])
+    for row in cur.fetchall():
+        points = row[0]
+        print(player, 'now has', points, 'points')
+        if points >= 62:
+            ctx.send(f'{player} now has enough Clan Points to be an Admin')
+        elif points >= 42:
+            ctx.send(f'{player} is now a General')
+        elif points >= 28:
+            ctx.send(f'{player} is now a Captain')
+        elif points >= 17:
+            ctx.send(f'{player} is now a Lieutenant')
+        elif points >= 8:
+            ctx.send(f'{player} is now a Sergeant')
+        elif points >= 3:
+            ctx.send(f'{player} is now a Corporal')
+
 
 @bot.command(name='cap', help='Type Discord or player name after command')
 @commands.has_role('Admin')
@@ -52,6 +68,23 @@ async def on_cap(ctx, player):
     sql = 'UPDATE ClanPoints SET points=points+2 WHERE player=?'
     cur.execute(sql, [player])
     conn.commit()
+    sql = 'SELECT points FROM ClanPoints WHERE player=?'
+    cur.execute(sql, [player])
+    for row in cur.fetchall():
+        points = row[0]
+        print(player, 'now has', points, 'points')
+        if points >= 62:
+            ctx.send(f'{player} now has enough Clan Points to be an Admin')
+        elif points >= 42:
+            ctx.send(f'{player} is now a General')
+        elif points >= 28:
+            ctx.send(f'{player} is now a Captain')
+        elif points >= 17:
+            ctx.send(f'{player} is now a Lieutenant')
+        elif points >= 8:
+            ctx.send(f'{player} is now a Sergeant')
+        elif points >= 3:
+            ctx.send(f'{player} is now a Corporal')
 
 
 @bot.event
@@ -71,6 +104,11 @@ async def on_member_join(member):
 
 
 @bot.event
+async def on_raw_reaction_add(payload):
+    print(payload)
+
+
+@bot.event
 async def on_message(message):
     if message.author == bot.user:
         return
@@ -79,7 +117,7 @@ async def on_message(message):
     if 'capped' in message.content.lower() and message.channel.name == 'citadel-and-recruitment':
         author = (str(message.author).split('#'))
         player = author[0]
-        await message.channel.send(f'Thank you for capping at the citadel {player}!')
+        await message.channel.send(f'Thank you for capping at the citadel, {player}!')
         sql = 'UPDATE ClanPoints SET points=points+2 WHERE player=?'
         cur.execute(sql, [player])
         conn.commit()
